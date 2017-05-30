@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
 
 import { Ajouter } from '../pages/ajouter/ajouter';
 import { CardList } from '../pages/cardList/cardList';
@@ -47,7 +48,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-      InAppBrowser,
+    InAppBrowser,
+    AndroidFingerprintAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
