@@ -1,37 +1,54 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
+import { TouchID } from '@ionic-native/touch-id';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 
-import { Ajouter } from '../pages/ajouter/ajouter';
-import { CardList } from '../pages/cardList/cardList';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-import { Connected } from '../pages/connected/connected';
-import { ConnectedHome } from '../pages/connectedHome/connectedHome';
+import { Ajouter } from './controllers/ajouter';
+import { HomePage } from './controllers/home';
+import { TabsPage } from './controllers/tabs';
+import { Connected } from './controllers/connected';
+import { ConnectedHome } from './controllers/connected-home';
+import { Forms } from './controllers/forms';
+import { Gallery } from './controllers/gallery';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyCPwhlvOkwf5O1KKQrBHzcNOlAAoDz5SvY",
+  authDomain: "ionic-project-167212.firebaseapp.com",
+  databaseURL: "https://ionic-project-167212.firebaseio.com",
+  projectId: "ionic-project-167212",
+  storageBucket: "ionic-project-167212.appspot.com",
+  messagingSenderId: "318644373180"
+};
 
 @NgModule({
   declarations: [
     MyApp,
     Ajouter,
-    CardList,
     HomePage,
     TabsPage,
     Connected,
-    ConnectedHome
+    ConnectedHome,
+    Forms,
+    Gallery
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp, {}, {
       links: [
-        { component: Connected, name: 'connected', segment: 'connected' }
+        { component: Connected, name: 'connected', segment: 'connected' },
+        { component: Forms, name: 'form', segment: 'form' }
       ]
     })
   ],
@@ -39,17 +56,21 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     Ajouter,
-    CardList,
     HomePage,
     TabsPage,
     Connected,
-    ConnectedHome
+    ConnectedHome,
+    Forms,
+    Gallery
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    InAppBrowser,
     AndroidFingerprintAuth,
+    TouchID,
+    Camera,
+    Base64ToGallery,
+    AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

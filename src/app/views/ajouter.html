@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Secret Pictures
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <button ion-button large (click)="takePicture()" style="width:100%; background-color:#00d200;">Take a Picture</button>
+      <h1>Latest Picture:</h1>
+      <img [src]="base64Image" *ngIf="base64Image" />
+      <div id="buttons"></div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
