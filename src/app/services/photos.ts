@@ -11,7 +11,7 @@ export class PhotoService{
     constructor(private camera: Camera, private base64ToGallery: Base64ToGallery){
     }
 
-    public takePicture():number{
+    public takePicture(callback, callback2){
 
         let code :number;
 
@@ -24,25 +24,19 @@ export class PhotoService{
             // imageData is a base64 encoded string
             this.savedImage = imageData;
             this.base64Image = "data:image/jpeg;base64," + imageData;
-            code = 0;
         }, (err) => {
            code = -1;
-        });
+        }).then(callback).then(callback2);
+    }
 
+    public savedImageToGallery():number{
+        let code : number;
+        this.base64ToGallery.base64ToGallery(this.savedImage, { prefix: '_img' });
         return code;
     }
 
     public getLastPhoto():string{
         return this.base64Image;
-    }
-
-    public savedImageToGallery():number{
-        let code : number;
-        this.base64ToGallery.base64ToGallery(this.savedImage, { prefix: '_img' }).then(
-            (res) => {code = 0;},
-            (err) => {code = -1;}
-        );
-        return code;
     }
 
 }

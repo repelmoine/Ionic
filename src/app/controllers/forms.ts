@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { Connected } from './connected';
 import * as firebase from 'firebase';
 
 /**
@@ -30,20 +31,12 @@ export class Forms {
     this.base64Image = navParams.get("picture");
     this.pic.photo = this.base64Image;
     this.photos = af.list('/photos');
-    //this.initFirebase();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FormsPage');
   }
 
   logForm(form) {
 
-    console.log(this.pic.title);
     this.photos.push(this.pic);
+    this.navCtrl.pop();
   }
 
-  private initFirebase() {
-
-  }
 }

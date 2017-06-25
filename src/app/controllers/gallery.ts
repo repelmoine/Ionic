@@ -20,9 +20,4 @@ export class Gallery {
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFireDatabase) {
     this.photos = af.list("/photos");
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad GalleryPage');
-  }
-
 }

@@ -16,10 +16,10 @@ export class HomePage {
 
     connected = Connected;
     authService : AuthService;
-    code : number;
 
   public constructor(public navCtrl: NavController, public plt: Platform, authService : AuthService) {
       this.authService = authService;
+      this.redirectConnected = this.redirectConnected.bind(this);
   }
 
   public login(){
@@ -27,29 +27,22 @@ export class HomePage {
           this.initIosFingerPrint();
       }else if(this.plt.is('android')){
           this.initAndroidFingerPrint();
+      }else{
+          this.navCtrl.push('connected');
       }
-      this.navCtrl.push('connected');
   }
 
   public initAndroidFingerPrint(){
-      this.code = this.authService.androidAuth();
+      this.authService.androidAuth(this.redirectConnected);
+
 
   }
 
   public initIosFingerPrint(){
-      this.authService.iosAuth();
+      this.authService.iosAuth(this.redirectConnected);
   }
 
-  public codeGesture(code: number){
-      switch (this.code){
-          case 0:
-              this.navCtrl.push('connected');
-          case 1:
-          // aucun résultat ne correspond
-          case 2:
-          // fingerprint indisponible
-          case -1:
-          // authentication error
-      }
+  public redirectConnected(){
+      this.navCtrl.push('connected')
   }
 }

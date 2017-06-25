@@ -7,7 +7,7 @@ import { PhotoService } from '../services/photos';
 @Component({
   selector: 'page-ajouter',
   templateUrl: '../views/ajouter.html',
-  providers: [PhotoService]
+  providers: [PhotoService],
 })
 export class Ajouter {
   public base64Image: string;
@@ -17,41 +17,34 @@ export class Ajouter {
 
   constructor(public navCtrl: NavController, photoService : PhotoService) {
     this.photoService = photoService;
+    this.initButtons = this.initButtons.bind(this);
+    this.getLastPicture = this.getLastPicture.bind(this);
   }
 
   public takePicture(){
-    this.photoService.takePicture();
+
+      this.photoService.takePicture(this.initButtons,this.getLastPicture);
   }
 
-  public initButtons(){
+  public getLastPicture(){
+      this.base64Image = this.photoService.getLastPhoto();
+  }
+
+   initButtons(){
     let parent = document.getElementById('buttons');
     let button1 = document.createElement("button");
-    let button2 = document.createElement("button");
     let txt1 = document.createTextNode("Enregistrer");
-    let txt2 = document.createTextNode("Annuler");
 
-    button1.setAttribute("id","save");
-    button2.setAttribute("id","cancel");
-
+    button1.setAttribute("class","save");
     button1.appendChild(txt1);
-    button2.appendChild(txt2);
-
     parent.appendChild(button1);
-    parent.appendChild(button2);
-
     button1.addEventListener('click',(event)=>{
           let savedCode : number;
 
-          this.navCtrl.push('form', {picture: this.photoService.getLastPhoto()});
-          savedCode = this.photoService.savedImageToGallery();
-          if(savedCode == 0){
-            console.log("Image saved in gallery");
-          }
 
-    });
+          this.photoService.savedImageToGallery();
+          this.navCtrl.push('form', {picture: this.base64Image});
 
-    button2.addEventListener('click',(event)=>{
-        this.navCtrl.pop();
     });
   }
 }
